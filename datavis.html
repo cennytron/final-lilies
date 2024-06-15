@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Viewer</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://use.typekit.net/wrl2sxd.css" rel="stylesheet">
+</head>
+<body>
+    <div id="3d-model-container"></div>
+    <h1 id="zoom-heading1"></h1>
+    <h2 id="zoom-heading2"></h2>
+    <button id="next-button2" class="button-common">More Info</button>
+    <button id="toggle-lily-button" class="button-common">Flower Off</button> <!-- New button -->
+    <div id="info-box"></div> <!-- Ensure this element exists -->
+    
+    <!-- Popup Window -->
+    <div id="popup-overlay">
+        <div id="popup-content">
+            <button id="close-popup">X</button>
+            <p> This is an interactive model where you will be able to hear the structure of the aromatic compounds present in the lilium genus. These mussical jingles have been created by translating/sonfying the data from a study done by Fang et al (2019). Click on the sound waves to hear how the different aromatic compounds have been translated.</p>
+        </div>
+    </div>
+
+    <!-- QUESTION MARK BUTTON -->
+    <button id="info-button" class="button-common">?</button>
+    <div id="info-popup" class="hidden">
+        <h> What do each of the sounds mean? </h>
+        <p> single bond = short note </p>
+        <p> double bond = long note </p>
+        <p> hash bond = recurring short note </p>  
+        <p> Carbon = Short violin </p> 
+        <p> Hydrogen = piano </p>  
+        <p> Oxygen = pluck synth </p>
+        <p>For more information on each of these chemical compound elements please click here</p>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Show the popup window on load
+        const popupOverlay = document.getElementById('popup-overlay');
+        const closePopupButton = document.getElementById('close-popup');
+
+        closePopupButton.addEventListener('click', () => {
+            popupOverlay.style.display = 'none';
+        });
+
+        // Set up the scene, camera, and renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xF9EBE0, 1); // Set renderer background color to F9EBE0
+        document.getElementById('3d-model-container').appendChild(renderer.domElement);
+
+        // Set up OrbitControls for user interaction
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.enableZoom = true;
+
+        let lilyModel;
+        let moleculeSpinning = false; // Flag to control spinning
+        const soundWaveMarkers = [];
+
+        // Load the 3D model
+        const loader = new THREE.GLTFLoader();
+        loader.load('models/model.glb', function (gltf) {
+            lilyModel = gltf.scene;
+            lilyModel.scale.set(15, 15, 15); // Scale the model to be larger
+            scene.add(lilyModel);
+
+            // Add sound wave markers to the model at specific locations
+            const markers = [
+                { position: [0, 2.8, 0], info: "Eucalyptol, Compound class: Monoterpene alcohols(Cyclic), Odour description: Cool, Odour description: Characteristic camphoraceous odor and fresh, pungent, cooling taste", sound: 'noises/1Eucalyptol_bip.wav', texture: 'Images/sound-waves/1Eucalyptol@2x.png' },
+                { position: [0, 2.45, 0], info: "β-Caryophyllene - molecule unstudied, Compound class:  Sesquiterpenes, Odour description: Woody-spicy, dry, clove like aroma, Odour classification: Woody ", sound: 'noises/2Beta%20caryophyllene_bip.wav', texture: 'Images/sound-waves/2B-Caryophyllene@2x.png' },
+                { position: [0, 2.1, 0], info: "D-Limonene, Compound class: Monoterpene Hydrocarbon (Cyclic), Odour classification: citrus (pleasent), Odour description: Please, lemon like odour ", sound: 'noises/3D-Limonene_bip.wav', texture: 'Images/sound-waves/3D-Limonene@2x.png' },
+                { position: [0, 1.75, 0], info: "Ethyl Benzoate, Compound class: Benzenoids, Odour description: Somewhat fruity odor similar to ylang-ylang, Odour classification: Fruity ", sound: 'noises/4Ethyl%20benzoate_bip.wav', texture: 'Images/sound-waves/4Ethyl Benzoate@2x.png' },
+                { position: [0, 1.4, 0], info: "(E)-Nerolidol, Compound class: Sesquiterpenes, Odour description: Faint, fresh, unusually sweet, tenacious, floral odor similar to rose and apple, Odour classification: Floral", sound: 'noises/5Nerolidol.wav', texture: 'Images/sound-waves/5(E)-Nerolidol@2x.png' },
+                { position: [0, 1.05, 0], info: "Decane - molecule unstudied, Compound class:  Fatty Acid Derived, Odour description: n/A, Odour classification: n/a", sound: 'noises/6Decane_bip.wav', texture: 'Images/sound-waves/6Decane@2x.png' },
+                { position: [0, 0.7, 0], info: "Decanal, Compound class:  Fatty Acid Derived , Odour description: Penetrating, sweet, waxy, floral, citrus, pronounced fatty odor, Odour, classification: Citrus", sound: 'noises/7Decanal_bip.wav', texture: 'Images/sound-waves/7Decanal@2x.png' },
+                { position: [0, 0.35, 0], info: "Methyl hexanoate- molecule unstudied, Compound class: Fatty Acid derived,  Odour description:  Ether-like odor reminiscent of pineapple, Odour, classification: Fruity", sound: 'noises/8Methyl%202-hexenoate_bip.wav', texture: 'Images/sound-waves/8Methyl 2-Hexenpate@2x.png' },
+                { position: [0, 0.0, 0], info: "Methyl butyrate, Compound class: Fatty Acid Derived, Odour description: Apple-like odor and corresponding sweet taste;Below 100 ppm, may have a banana–pineapple flavor, Odour classification: Fruity", sound: 'noises/9Methyl%20butyrate_bip.wav', texture: 'Images/sound-waves/9Methyl Butyrate@2x.png' },
+                { position: [0, -0.35, 0], info: "Methyl Dodecanoate - molecule unstudied, Compound class: Fatty acid derived, Odour description: fatty, floral odour, Odour classification: N/A", sound: 'noises/10Methyl%20dodecanoate_bip.wav', texture: 'Images/sound-waves/10Methyl Dodecanaoate@2x.png' },
+                { position: [0, -0.7, 0], info: "Marker 11 info", sound: 'noises/11Methyl%20hexan_bip.wav', texture: 'Images/sound-waves/11Methyl Hexanoate@2x.png' },
+                { position: [0, -1.05, 0], info: "Ethyl Tiglate - compound reported for the first time in lilly, Compound class:  Fatty Acid Derived, Odour description: Fruity, caramel odour, Odour classification: Fruitty ", sound: 'noises/12Ethyl%20tiglate_bip.wav', texture: 'Images/sound-waves/12Ethyl Tiglate@2x.png' },
+                { position: [0, -1.4, 0], info: "Methyl tiglate - reported for the first time in lilies, Compound class: Fatty acid derived, Odour description: N/A, Odour classification: N/A ", sound: 'noises/13Methyl%20tiglate_bip.wav', texture: 'Images/sound-waves/13Methyl Tiglate@2x.png' },
+                { position: [0, -1.75, 0], info: "Methyl Octanoate - molecule unstudied, Compound class: Fatty Acid Derived, Odour description: Winy, fruity and orange-like odor, Odour classification:  Fruity ", sound: 'noises/14Methyl octane_bip.wav', texture: 'Images/sound-waves/14Methyl Octanoate@2x.png' },
+                { position: [0, -2.1, 0], info: "Marker 15 info", sound: 'noises/15%20(E,Z)-Alloocimen.wav', texture: 'Images/sound-waves/15(E,Z) Allocimene@2x.png' },
+                { position: [0, -2.45, 0], info: "E-Linalool-Oxide", sound: 'noises/16E-Linalool%20oxide_bip.wav', texture: 'Images/sound-waves/16e-linalool@2x.png' }
+            ];
+
+            const textureLoader = new THREE.TextureLoader();
+
+            markers.forEach((markerData, index) => {
+                textureLoader.load(markerData.texture, (texture) => {
+                    const geometry = new THREE.PlaneGeometry(1, 0.2); // Increase the size of the plane geometry
+                    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+                    const markerMesh = new THREE.Mesh(geometry, material);
+                    markerMesh.position.set(...markerData.position);
+                    markerMesh.scale.set(2, 2, 2); // Adjust the scale if needed
+                    markerMesh.name = `Marker ${index + 1}`;
+                    markerMesh.userData.info = markerData.info;
+                    markerMesh.userData.sound = markerData.sound;
+                    scene.add(markerMesh);
+                    soundWaveMarkers.push(markerMesh); // Add to the markers array
+                });
+            });
+
+            renderer.render(scene, camera);
+        }, undefined, function (error) {
+            console.error(error);
+        });
+
+        // Set up lighting
+        const light = new THREE.AmbientLight(0x404040); // Soft white light
+        scene.add(light);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(0, 0, 1).normalize();
+        scene.add(directionalLight);
+
+        // Position the camera to face the front of the model
+        camera.position.set(0, 0, 2); // Positioned along the Z-axis
+        camera.lookAt(new THREE.Vector3(0, 0, 0)); // Assuming the model is centered at (0, 0, 0)
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Add event listener for the "More Info" button
+        const moreInfoButton = document.getElementById('next-button2');
+        moreInfoButton.addEventListener('click', () => {
+            window.location.href = 'about.html'; // Redirect to the about.html page
+        });
+
+        // Add event listener for the "Toggle Lily" button
+        const toggleLilyButton = document.getElementById('toggle-lily-button');
+        toggleLilyButton.addEventListener('click', () => {
+            if (lilyModel) {
+                lilyModel.visible = !lilyModel.visible; // Toggle visibility
+                toggleLilyButton.textContent = lilyModel.visible ? 'Flower Off' : 'Flower On'; // Update button text
+            }
+        });
+
+        // Adjust this value to change the rotation speed (slower)
+        const rotationSpeed = 0.001;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // Rotate the lily model continuously
+            if (lilyModel && lilyModel.visible && !moleculeSpinning) {
+                lilyModel.rotation.y += rotationSpeed; // Use the rotationSpeed variable
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle mouse wheel event to zoom in/out
+        window.addEventListener('wheel', (event) => {
+            const delta = event.deltaY * 0.001; // Adjust this factor to control zoom speed
+            camera.position.z += delta;
+            camera.position.z = Math.max(0.01, Math.min(50, camera.position.z)); // Clamp the zoom level
+        });
+
+        // Raycaster for click detection
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        // Add event listener for clicks on the model
+        renderer.domElement.addEventListener('click', (event) => {
+            // Calculate mouse position in normalized device coordinates (-1 to +1) for both components.
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // Update the raycaster with the camera and mouse position.
+            raycaster.setFromCamera(mouse, camera);
+
+            // Calculate objects intersecting the ray.
+            const intersects = raycaster.intersectObjects(scene.children, true);
+
+            if (intersects.length > 0) {
+                const intersectedObject = intersects[0].object;
+
+                if (intersectedObject.userData.info) {
+                    moleculeSpinning = true; // Stop model spinning
+                    // Play sound
+                    const audio = new Audio(intersectedObject.userData.sound);
+                    audio.play().catch(error => console.error('Error playing sound:', error));
+                    audio.addEventListener('ended', () => {
+                        moleculeSpinning = false; // Resume model spinning after sound ends
+                    });
+
+                    // Display information about the clicked point
+                    const infoBox = document.getElementById('info-box');
+                    if (infoBox) {
+                        infoBox.style.display = 'block';
+                        infoBox.style.left = `${event.clientX + 10}px`;
+                        infoBox.style.top = `${event.clientY + 10}px`;
+                        infoBox.innerHTML = `<p>${intersectedObject.userData.info}</p><button id="close-info-box">X</button>`;
+
+                        // Add event listener to close the info box
+                        document.getElementById('close-info-box').addEventListener('click', () => {
+                            infoBox.style.display = 'none';
+                        });
+                    } else {
+                        console.error('Info box element not found.');
+                    }
+                }
+            }
+        });
+
+        // Add event listener for the "Info" button
+        const infoButton = document.getElementById('info-button');
+        const infoPopup = document.getElementById('info-popup');
+
+        infoButton.addEventListener('click', () => {
+            if (infoPopup.style.display === 'none') {
+                infoPopup.style.display = 'block';
+                infoButton.innerHTML = 'X';
+            } else {
+                infoPopup.style.display = 'none';
+                infoButton.innerHTML = '?';
+            }
+        });
+    });
+    </script>
+</body>
+</html>

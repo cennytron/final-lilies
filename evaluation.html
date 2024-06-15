@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="style3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/wrl2sxd.css">
+    <link rel="stylesheet" href="https://use.typekit.net/wrl2sxd.css">
+</head>
+<body>
+    <div id="background-image4"></div>
+
+    <div class="navbar">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li><a href="datavis.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="Process.html">Process</a></li>
+                <li><a href="where-next-landing.html" class="where-next.html">Where Next?</a></li>
+                <li><a href="evaluation.html">Evaluation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Evaluation </h1>
+        <div class="content-grid">
+            <!-- Your content sections go here -->
+            <div class="content-section" style="grid-column: 2;">
+
+                <div class="content-section" style="grid-column: 2;">
+                    <h3>Limitations</h3>
+                    <div class="content-box">
+                        <p>The project that has been presented is significantly limited in so far as it relies on the availability of data. The scarcity in comprehensive molecular data on the various scent restricted the scope of this project. However this limitation also highlights the forward thinking nature of this work. Ahead of its time, process such as this have the power to revoluntionise our understanding and interaction with phytochemical data and how that interacts with our senses. Importantly, this proposed campaign would need to be implemented as part of the marketing plan and would be most successful when applied across Relies on the information of 2D data.  
+                    </div>
+                </div>
+
+                <h3>Data Avaliability + Accuracy</h3>
+                <div class="content-box">
+                    <p>To fully realise the potential of this process of molecular sonification it is imperative to show how this may be applied to different contexts. Broadly, this process can be applied to every array of molecular compound structures and can be furthered into looking at their interaction. This is part of a larger interdisiplinary discourse in which the gap between science and art is bridged and information is presented in a  more accessible and creative way.</p>
+                    <p>
+                        Limited molecular data: There is a current scarcity of comprehensive molecular data on various scents. This is particularly for lesser studied flowers. This limits the choices of what data can be analyzed and is heavily the reason why an in depth analysis of lillies was chosen. Great research was done into trying to find molecular data on native australian flower in order to more closely align with my context however this could not be found.  </p>
+                    
+                        <p>Data quality: Beyond this, determining whether the data is accurate, consistent and of a high quality can be challenging. Using low quality or inaccurate data can impede the effectiveness of this sonification process. The limited availability exasperates this issue.</p>
+                </div>
+
+                <h3>Technological Limitations</h3>
+                <div class="content-box">
+                    <p>Complexity of molecular structures: this process relied upon two dimensional representations. This sonification technique could of resulted in critical chemical characteristics being lost in translation. This limitation was considered in depth in the translation process however the decision to continue was based on the nature of translation. In every translation key components can be lost or mis-translated. While this is not the premise of this study it offers a secondary consideration about translation processes and how this can impact the information. This is particularly pertinent when considering that current molecular translations rely on the traditional molecule structure. The scientific communication of molecular data is very limited in the way that it is translated. It is something to consider however, it is outside the scope of this research study. </p>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinksContainer = document.querySelector('.nav-links-container');
+            const menuIcon = document.querySelector('.menu-icon');
+            navLinksContainer.classList.toggle('show');
+            menuIcon.classList.toggle('open');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

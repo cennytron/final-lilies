@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process</title>
+    <link rel="stylesheet" href="style3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/wrl2sxd.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+</head>
+<body class="process-page">
+    <div id="background-image2"></div>
+
+    <div class="navbar">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li><a href="datavis.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="Process.html">Process</a></li>
+                <li><a href="where-next-landing.html" class="where-next.html">Where Next?</a></li>
+                <li><a href="evaluation.html">Evaluation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content process-page-content">
+        <!-- <h1>Process</h1> -->
+
+        <!-- Data Processing Carousel -->
+        <div class="carousel-container">
+            <h2>Data Processing</h2>
+            <div class="carousel">
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Data-scrapping/unscrapped-data.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>STEP 1: Download relevant molecular data file (for this project I used a study completed by Fang et Al 'Volatile composition and classification of Lilium flower aroma types and identification, polymorphisms, and alternative splicing of their monoterpene synthase genes'). This image is a screenshot of the unfiltered data. 
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Data-scrapping/scrapped-data-1.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>STEP 2:  Delete any irrelevant data – in this case molecules that were found to be contributing to 0.0 of all the lilies were removed. This applies data scrapping principles whereby data is meaningfully extracted and turned into an easily readable and accessible format.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more slides as needed -->
+            </div>
+        </div>
+
+        <!-- Generating Jingles Carousel -->
+        <div class="carousel-container">
+            <h2>Generating Jingles</h2>
+            <div class="carousel">
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Sonification/sonficiation2.2.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>STEP 1: Using MolView, find 2D version of molecular structure. This image is a screenshot of Molview's interface. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Sonification/sonification1.2.1.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p> Note: An interesting study could be done about the molecules that are researched and that are not found to make up any of the data. Thinking about how we translate and gather data and what molecules remain silent in the process despite our efforts to observe them. Further contemplation to be given to the molecules that do not exist or we have not figure out how to translate. Importantly, from the data collected the text in red is data on molecules that had not been studied before. Interesting that my translation remains relatively silent to these particles as a lot of them were found to contribute 0.0%  </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Sonification/sonficiation2.1.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>STEP 2: Assign middle C based on the molecular structure - center of the molecule (this predominately be the carbon atoms) - this creates the spine of the jingles. 3 separate instruments (3 separate atom types in the relevant molecules translated) - in Logic Pro set up three lots of midi: Structure Carbon; Structure hydron; Where relevant structure oxygen (not always present). This image indicates how the atomic structures have been translated.  </p>
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Sonification/sonification1.1.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>This is another reference image for how the structures have been translated</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Sonification/ocimene-logicpro.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>This reference image is the translation on the LogicPro Interface</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Sonification/logicpro-eucalyptol.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>Again, this reference image is the translation on the LogicPro Interface</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Observations Carousel -->
+        <!-- <div class="carousel-container">
+            <h2>Observations</h2>
+            <div class="carousel">
+                <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Observations/observation1.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>The difference in 3D and 2D...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div>
+                    <div class="carousel-image" style="background-image: url('Images/Process/Observations/observation2.png');">
+                        <div class="carousel-caption">
+                            <div class="content-box">
+                                <p>Carbon atoms would predominately make up the spine structure...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Add more slides as needed -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        function toggleMenu() {
+            const navLinksContainer = document.querySelector('.nav-links-container');
+            const menuIcon = document.querySelector('.menu-icon');
+            navLinksContainer.classList.toggle('show');
+            menuIcon.classList.toggle('open');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add('active');
+                }
+            });
+
+            $('.carousel').slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                adaptiveHeight: true,
+                arrows: true,
+            });
+        });
+    </script>
+</body>
+</html>

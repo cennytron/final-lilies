@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Viewer</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://use.typekit.net/wrl2sxd.css" rel="stylesheet">
+</head>
+<body>
+    <div id="3d-model-container"></div>
+    <h1 id="zoom-heading1"></h1>
+    <h2 id="zoom-heading2"></h2>
+    <button id="next-button2" class="button-common">More Info</button>
+    <button id="toggle-lily-button" class="button-common">Flower Off</button> <!-- New button -->
+    <div id="info-box"></div> <!-- Ensure this element exists -->
+    
+    <!-- Popup Window -->
+    <div id="popup-overlay">
+        <div id="popup-content">
+            <button id="close-popup">X</button>
+            <p>Aromatic compound data for this model has been taken from Fang et al (2019) and translated into musical jingles. It offers and presents an alterior translation method that creatively diverges from chemistry's traditional molecular structure representation. Click on the points to hear how the different aromatic compounds have been translated.</p>
+        </div>
+    </div>
+
+    <!-- QUESTION MARK BUTTON -->
+    <button id="info-button" class="button-common">?</button>
+    <div id="info-popup" class="hidden">
+        <p>This is the information that appears when the question mark is clicked.</p>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- <script src="scripts/data-visu.js"></script> -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Show the popup window on load
+        const popupOverlay = document.getElementById('popup-overlay');
+        const closePopupButton = document.getElementById('close-popup');
+
+        closePopupButton.addEventListener('click', () => {
+            popupOverlay.style.display = 'none';
+        });
+
+        // Set up the scene, camera, and renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xF9EBE0, 1); // Set renderer background color to F9EBE0
+        document.getElementById('3d-model-container').appendChild(renderer.domElement);
+
+        // Set up OrbitControls for user interaction
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.enableZoom = true;
+
+        let lilyModel;
+        const soundWaveMarkers = [];
+
+        // Load the 3D model
+        const loader = new THREE.GLTFLoader();
+        loader.load('models/model.glb', function (gltf) {
+            lilyModel = gltf.scene;
+            lilyModel.scale.set(15, 15, 15); // Scale the model to be larger
+            scene.add(lilyModel);
+
+            // Add sound wave markers to the model at specific locations
+            const markers = [
+                { position: [0, 2.8, 0], info: "Marker 1 info", sound: 'noises/1Eucalyptol_bip.wav', texture: 'Images/sound-waves/1Eucalyptol@2x.png' },
+                { position: [0, 2.45, 0], info: "Marker 2 info", sound: 'noises/2Beta%20caryophyllene_bip.wav', texture: 'Images/sound-waves/2B-Caryophyllene@2x.png' },
+                { position: [0, 2.1, 0], info: "Marker 3 info", sound: 'noises/3D-Limonene_bip.wav', texture: 'Images/sound-waves/3D-Limonene@2x.png' },
+                { position: [0, 1.75, 0], info: "Marker 4 info", sound: 'noises/4Ethyl%20benzoate_bip.wav', texture: 'Images/sound-waves/4Ethyl Benzoate@2x.png' },
+                { position: [0, 1.4, 0], info: "Marker 5 info", sound: 'noises/5Nerolidol.wav', texture: 'Images/sound-waves/5(E)-Nerolidol@2x.png' },
+                { position: [0, 1.05, 0], info: "Marker 6 info", sound: 'noises/6Decane_bip.wav', texture: 'Images/sound-waves/6Decane@2x.png' },
+                { position: [0, 0.7, 0], info: "Marker 7 info", sound: 'noises/7Decanal_bip.wav', texture: 'Images/sound-waves/7Decanal@2x.png' },
+                { position: [0, 0.35, 0], info: "Marker 8 info", sound: 'noises/8Methyl%202-hexenoate_bip.wav', texture: 'Images/sound-waves/8Methyl 2-Hexenpate@2x.png' },
+                { position: [0, 0.0, 0], info: "Marker 9 info", sound: 'noises/9Methyl%20butyrate_bip.wav', texture: 'Images/sound-waves/9Methyl Butyrate@2x.png' },
+                { position: [0, -0.35, 0], info: "Marker 10 info", sound: 'noises/10Methyl%20dodecanoate_bip.wav', texture: 'Images/sound-waves/10Methyl Dodecanaoate@2x.png' },
+                { position: [0, -0.7, 0], info: "Marker 11 info", sound: 'noises/11Methyl%20hexan_bip.wav', texture: 'Images/sound-waves/11Methyl Hexanoate@2x.png' },
+                { position: [0, -1.05, 0], info: "Marker 12 info", sound: 'noises/12Ethyl%20tiglate_bip.wav', texture: 'Images/sound-waves/12Ethyl Tiglate@2x.png' },
+                { position: [0, -1.4, 0], info: "Marker 13 info", sound: 'noises/13Methyl%20tiglate_bip.wav', texture: 'Images/sound-waves/13Methyl Tiglate@2x.png' },
+                { position: [0, -1.75, 0], info: "Marker 14 info", sound: 'noises/14Methyl%20octane_bip.wav', texture: 'Images/sound-waves/14Methyl Octanoate@2x.png' },
+                { position: [0, -2.1, 0], info: "Marker 15 info", sound: 'noises/15%20(E,Z)-Alloocimen.wav', texture: 'Images/sound-waves/15(E,Z) Allocimene@2x.png' },
+                { position: [0, -2.45, 0], info: "Marker 16 info", sound: 'noises/16E-Linalool%20oxide_bip.wav', texture: 'Images/sound-waves/16e-linalool@2x.png' }
+            ];
+
+            const textureLoader = new THREE.TextureLoader();
+
+            markers.forEach((markerData, index) => {
+                textureLoader.load(markerData.texture, (texture) => {
+                    const geometry = new THREE.PlaneGeometry(1, 0.2); // Increase the size of the plane geometry
+                    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+                    const markerMesh = new THREE.Mesh(geometry, material);
+                    markerMesh.position.set(...markerData.position);
+                    markerMesh.scale.set(2, 2, 2); // Adjust the scale if needed
+                    markerMesh.name = `Marker ${index + 1}`;
+                    markerMesh.userData.info = markerData.info;
+                    markerMesh.userData.sound = markerData.sound;
+                    scene.add(markerMesh);
+                    soundWaveMarkers.push(markerMesh); // Add to the markers array
+                });
+            });
+
+            renderer.render(scene, camera);
+        }, undefined, function (error) {
+            console.error(error);
+        });
+
+        // Set up lighting
+        const light = new THREE.AmbientLight(0x404040); // Soft white light
+        scene.add(light);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(0, 0, 1).normalize();
+        scene.add(directionalLight);
+
+        // Position the camera to face the front of the model
+        camera.position.set(0, 0, 2); // Positioned along the Z-axis
+        camera.lookAt(new THREE.Vector3(0, 0, 0)); // Assuming the model is centered at (0, 0, 0)
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Add event listener for the "More Info" button
+        const moreInfoButton = document.getElementById('next-button2');
+        moreInfoButton.addEventListener('click', () => {
+            window.location.href = 'about.html'; // Redirect to the about.html page
+        });
+
+        // Add event listener for the "Toggle Lily" button
+        const toggleLilyButton = document.getElementById('toggle-lily-button');
+        toggleLilyButton.addEventListener('click', () => {
+            if (lilyModel) {
+                lilyModel.visible = !lilyModel.visible; // Toggle visibility
+                toggleLilyButton.textContent = lilyModel.visible ? 'Flower Off' : 'Flower On'; // Update button text
+            }
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // Rotate the lily model continuously
+            if (lilyModel && lilyModel.visible) {
+                lilyModel.rotation.y += 0.01; // Adjust this value to change the rotation speed
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle mouse wheel event to zoom in/out
+        window.addEventListener('wheel', (event) => {
+            const delta = event.deltaY * 0.001; // Adjust this factor to control zoom speed
+            camera.position.z += delta;
+            camera.position.z = Math.max(0.01, Math.min(50, camera.position.z)); // Clamp the zoom level
+        });
+
+        // Raycaster for click detection
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        // Add event listener for clicks on the model
+        renderer.domElement.addEventListener('click', (event) => {
+            // Calculate mouse position in normalized device coordinates (-1 to +1) for both components.
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // Update the raycaster with the camera and mouse position.
+            raycaster.setFromCamera(mouse, camera);
+
+            // Calculate objects intersecting the ray.
+            const intersects = raycaster.intersectObjects(scene.children, true);
+
+            if (intersects.length > 0) {
+                const intersectedObject = intersects[0].object;
+
+                if (intersectedObject.userData.info) {
+                    // Play sound
+                    const audio = new Audio(intersectedObject.userData.sound);
+                    audio.play().catch(error => console.error('Error playing sound:', error));
+
+                    // Display information about the clicked point
+                    const infoBox = document.getElementById('info-box');
+                    if (infoBox) {
+                        infoBox.style.display = 'block';
+                        infoBox.style.left = `${event.clientX + 10}px`;
+                        infoBox.style.top = `${event.clientY + 10}px`;
+                        infoBox.innerHTML = `<p>${intersectedObject.userData.info}</p><button id="close-info-box">X</button>`;
+
+                        // Add event listener to close the info box
+                        document.getElementById('close-info-box').addEventListener('click', () => {
+                            infoBox.style.display = 'none';
+                        });
+                    } else {
+                        console.error('Info box element not found.');
+                    }
+                }
+            }
+        });
+
+        // Add event listener for the "Info" button
+        const infoButton = document.getElementById('info-button');
+        const infoPopup = document.getElementById('info-popup');
+
+        infoButton.addEventListener('click', () => {
+            if (infoPopup.style.display === 'none') {
+                infoPopup.style.display = 'block';
+                infoButton.innerHTML = 'X';
+            } else {
+                infoPopup.style.display = 'none';
+                infoButton.innerHTML = '?';
+            }
+        });
+    });
+    </script>
+</body>
+</html>

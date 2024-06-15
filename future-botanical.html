@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="style3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/wrl2sxd.css">
+    <link rel="stylesheet" href="https://use.typekit.net/wrl2sxd.css">
+</head>
+<body>
+    <div id="background-image2"></div>
+
+    <div class="navbar">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li><a href="datavis.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="Process.html">Process</a></li>
+                <li><a href="where-next-landing.html" class="where-next.html">Where Next?</a></li>
+                <li><a href="evaluation.html">Evaluation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Botanical Gardens </h1>
+        <div class="content-grid">
+            <!-- Your content sections go here -->
+            <div class="content-section" style="grid-column: 2;">
+
+                <div class="content-section" style="grid-column: 2;">
+                    <h3>Aim and Objectives</h3>
+                    <div class="content-box">
+                        <p>Another exciting application involves working with the Australian Botanical Gardens to sonify the molecular data of the flowers in their collections. This collaboration could result in an immersive garden tour where visitors can listen to the unique sounds of different flowers' molecular compositions as they walk through the gardens. Such an initiative would not only enhance the visitor experience but also serve as an educational tool, illustrating the complexity and beauty of plant chemistry in an innovative way.  
+                    </div>
+                </div>
+
+
+                <h3>Overall Expanding the Scope</h3>
+                <div class="content-box">
+                    <p>Data Accessibility and Integration: Developing partnerships with research institutions and companies to gain access to a broader range of molecular data. Creating open-access databases for molecular sonification data to encourage widespread use and collaboration. .</p>
+                    <p>
+                        Technological Advancements: Investing in advanced sonification software and tools to improve the accuracy and quality of the translations. Exploring the integration of virtual and augmented reality to create more immersive and interactive experiences. 
+                    </p>
+                    Education Outreach: Developing educational programs and workshops to teach students and the public about molecular sonification and its applications. Creating interactive online platforms where users can experiment with sonifying different chemical compounds. 
+                    <p>
+                        <p>
+                            The future of molecular sonification is ripe with possibilities. By expanding its application to a wider range of chemical compounds and collaborating with various institutions, we can create a richer, more engaging way of understanding the molecular world. These proposed projects not only highlight the versatility of molecular sonification but also emphasize its potential to transform how we perceive and interact with chemical data. 
+                        </p>
+
+                    </p>
+
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinksContainer = document.querySelector('.nav-links-container');
+            const menuIcon = document.querySelector('.menu-icon');
+            navLinksContainer.classList.toggle('show');
+            menuIcon.classList.toggle('open');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
